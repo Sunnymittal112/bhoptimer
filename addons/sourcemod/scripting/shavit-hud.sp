@@ -245,11 +245,6 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_hud", Command_HUD, "Opens the HUD settings menu.");
 	RegConsoleCmd("sm_options", Command_HUD, "Opens the HUD settings menu. (alias for sm_hud)");
 
-	// hud togglers
-	RegConsoleCmd("sm_keys", Command_Keys, "Toggles key display.");
-	RegConsoleCmd("sm_showkeys", Command_Keys, "Toggles key display. (alias for sm_keys)");
-	RegConsoleCmd("sm_showmykeys", Command_Keys, "Toggles key display. (alias for sm_keys)");
-
 	RegConsoleCmd("sm_master", Command_Master, "Toggles HUD.");
 	RegConsoleCmd("sm_masterhud", Command_Master, "Toggles HUD. (alias for sm_master)");
 
@@ -641,13 +636,6 @@ public Action Command_HideWeapon(int client, int args)
 public Action Command_TrueVel(int client, int args)
 {
 	ToggleHUD(client, HUD_2DVEL, true);
-
-	return Plugin_Handled;
-}
-
-public Action Command_Keys(int client, int args)
-{
-	ToggleHUD(client, HUD_KEYOVERLAY, true);
 
 	return Plugin_Handled;
 }
