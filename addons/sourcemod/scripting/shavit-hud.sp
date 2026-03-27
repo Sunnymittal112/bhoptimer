@@ -681,9 +681,6 @@ Action ShowHUDMenu(int client, int item)
 	FormatEx(sHudItem, 64, "%T", "HudSpectatorsDead", client);
 	menu.AddItem(sInfo, sHudItem);
 
-	FormatEx(sInfo, 16, "!%d", HUD_KEYOVERLAY);
-	FormatEx(sHudItem, 64, "%T", "HudKeyOverlay", client);
-	menu.AddItem(sInfo, sHudItem);
 
 	FormatEx(sInfo, 16, "!%d", HUD_HIDEWEAPON);
 	FormatEx(sHudItem, 64, "%T", "HudHideWeapon", client);
@@ -808,13 +805,6 @@ Action ShowHUDMenu(int client, int item)
 
 		FormatEx(sInfo, 16, "@%d", HUD2_USPSILENCER);
 		FormatEx(sHudItem, 64, "%T", "HudUSPSilencer", client);
-		menu.AddItem(sInfo, sHudItem);
-	}
-
-	if (gEV_Type == Engine_CSGO)
-	{
-		FormatEx(sInfo, 16, "@%d", HUD2_CENTERKEYS);
-		FormatEx(sHudItem, 64, "%T", "HudCenterKeys", client);
 		menu.AddItem(sInfo, sHudItem);
 	}
 
