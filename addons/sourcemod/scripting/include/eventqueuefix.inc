@@ -29,7 +29,6 @@ enum struct eventpack_t
 {
 	ArrayList playerEvents;
 	ArrayList outputWaits;
-	ArrayList OnUser1_4[4];
 }
 
 enum struct entity_t
@@ -46,7 +45,7 @@ enum struct entity_t
  *
  * @return 							True if successful, false otherwise.
  */
-native bool GetClientEvents(int client, any[] eventpack, int packsize=sizeof(eventpack_t));
+native bool GetClientEvents(int client, any[] eventpack);
 
 /*
  * Sets the current pending events for a client.
@@ -56,7 +55,7 @@ native bool GetClientEvents(int client, any[] eventpack, int packsize=sizeof(eve
  *
  * @return 							True if successful, false otherwise.
  */
-native bool SetClientEvents(int client, any[] eventpack, int packsize=sizeof(eventpack_t));
+native bool SetClientEvents(int client, any[] eventpack);
 
 /*
  * Clears the current pending events for a client.
