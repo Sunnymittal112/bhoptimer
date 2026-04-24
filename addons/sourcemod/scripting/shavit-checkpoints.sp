@@ -1717,17 +1717,11 @@ void SaveCheckpointCache(int saver, int target, cp_cache_t cpcache, int index, H
 				delete ep.playerEvents;
 				cpcache.aOutputWaits = view_as<ArrayList>(CloneHandle(ep.outputWaits, plugin));
 				delete ep.outputWaits;
-				for (int N = 0; N < 4; N++)
-				{
-					cpcache.aOnUser1_4[N] = view_as<ArrayList>(CloneHandle(ep.OnUser1_4[N], plugin));
-					delete ep.OnUser1_4[N];
-				}
 			}
 			else
 			{
 				cpcache.aEvents = ep.playerEvents;
 				cpcache.aOutputWaits = ep.outputWaits;
-				cpcache.aOnUser1_4 = ep.OnUser1_4;
 			}
 		}
 	}
@@ -1941,26 +1935,6 @@ bool LoadCheckpointCache(int client, cp_cache_t cpcache, int index, bool force =
 		// if isPersistentData, then CloneHandle() is done instead of ArrayList.Clone()
 		Shavit_SetReplayData(client, cpcache.aFrames, isPersistentData);
 		Shavit_SetPlayerPreFrames(client, cpcache.iPreFrames);
-	}
-
-	if (gB_Eventqueuefix && cpcache.aEvents != null && cpcache.aOutputWaits != null)
-	{
-		eventpack_t ep;
-		ep.playerEvents = cpcache.aEvents;
-		ep.outputWaits = cpcache.aOutputWaits;
-		ep.OnUser1_4 = cpcache.aOnUser1_4;
-		SetClientEvents(client, ep);
-
-#if DEBUG
-		PrintToConsole(client, "targetname='%s'", cpcache.sTargetname);
-
-		for (int i = 0; i < cpcache.aEvents.Length; i++)
-		{
-			event_t e;
-			cpcache.aEvents.GetArray(i, e);
-			PrintToConsole(client, "%s %s %s %f %i %i %i", e.target, e.targetInput, e.variantValue, e.delay, e.activator, e.caller, e.outputID);
-		}
-#endif
 	}
 
 	Call_StartForward(gH_Forwards_OnCheckpointCacheLoaded);
