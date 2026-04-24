@@ -325,22 +325,22 @@ enum struct JsonThing
 
 	bool HasKey(const char[] key)
 	{
-		return this.isrip ? this.objrip.HasKey(key) : this.objsw.HasKey(key);
+		return this.isrip ? this.objrip.HasKey(key) : json_object_has(this.objsw, key);
 	}
 
 	int GetInt(const char[] key)
 	{
-		return this.isrip ? this.objrip.GetInt(key) : this.objsw.GetInt(key);
+		return this.isrip ? this.objrip.GetInt(key) : view_as<int>(json_object_get_int(this.objsw, key));
 	}
 
 	float GetFloat(const char[] key)
 	{
-		return this.isrip ? this.objrip.GetFloat(key) : this.objsw.GetFloat(key);
+		return this.isrip ? this.objrip.GetFloat(key) : json_object_get_float(this.objsw, key);
 	}
 
 	bool GetString(const char[] key, char[] buf, int size)
 	{
-		return this.isrip ? this.objrip.GetString(key, buf, size) : this.objsw.GetString(key, buf, size);
+		return this.isrip ? this.objrip.GetString(key, buf, size) : json_object_get_string(this.objsw, key, buf, size);
 	}
 
 	void GetVec(const char[] key, float vec[3])
@@ -390,7 +390,7 @@ ArrayList EatUpZones(any records, bool ripext, const char source[16])
 {
 	ArrayList zones = new ArrayList(sizeof(zone_cache_t));
 
-	int asdf = ripext ? view_as<JSONArray>(records).Length : view_as<JSON_Array>(records).Length;
+	int asdf = ripext ? view_as<JSONArray>(records).Length : json_array_length(view_as<JSON_Array>(records));
 
 	for (int RN = 0; RN < asdf; RN++)
 	{

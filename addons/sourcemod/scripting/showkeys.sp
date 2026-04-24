@@ -81,8 +81,8 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[1
     strcopy(sJ, sizeof(sJ), (buttons & IN_JUMP)? "J" : " ");
     strcopy(sC, sizeof(sC), (buttons & IN_DUCK)? "C" : " ");
 
-    strcopy(sML, sizeof(sML), (fDelta > 0.05)? "<-" : "  ");
-    strcopy(sMR, sizeof(sMR), (fDelta < -0.05)? "->" : "  ");
+    strcopy(sML, sizeof(sML), (fDelta > 0.05)? "←" : "  ");
+    strcopy(sMR, sizeof(sMR), (fDelta < -0.05)? "→" : "  ");
 
     char sBuffer;
     Format(sBuffer, sizeof(sBuffer), "   %s   \n %s %s %s \n %s   %s \n%s   %s", 
