@@ -4168,8 +4168,13 @@ bool InStartOrEndZone(float point1[3], float point2[3], int track, int type)
 	return false;
 }
 
-public Action Shavit_OnUserCmdPre(int client, int &buttons, int &impulse, float vel[3], float angles[3], TimerStatus status, int track, int style)
+public void OnPlayerRunCmdPre(int client, int buttons, int impulse, const float vel[3], const float angles[3], int weapon, int subtype, int cmdnum, int tickcount, int seed, const int mouse[2])
 {
+	if (IsFakeClient(client) || !IsPlayerAlive(client))
+	{
+		return;
+	}
+
 	if(gI_MapStep[client] > 0 && gI_MapStep[client] != 3)
 	{
 		int button = (gEV_Type == Engine_TF2)? IN_ATTACK2:IN_USE;
@@ -4225,7 +4230,10 @@ public Action Shavit_OnUserCmdPre(int client, int &buttons, int &impulse, float 
 
 		gB_Button[client] = (buttons & button) > 0;
 	}
+}
 
+public Action Shavit_OnUserCmdPre(int client, int &buttons, int &impulse, float vel[3], float angles[3], TimerStatus status, int track, int style)
+{
 	if(InsideZone(client, Zone_Slide, (gCV_EnforceTracks.BoolValue)? track:-1) && GetEntPropEnt(client, Prop_Send, "m_hGroundEntity") == -1)
 	{
 		// trace down, see if there's 8 distance or less to ground
@@ -5616,7 +5624,7 @@ public void TouchPost(int entity, int other)
 		{
 			TimerStatus status = Shavit_GetTimerStatus(other);
 
-			if (status != Timer_Stopped)
+			if (status == Timer_Running)
 			{
 				Shavit_StopTimer(other);
 				ACTUALLY_ForcePlayerSuicide(other);
@@ -5625,7 +5633,7 @@ public void TouchPost(int entity, int other)
 		}
 		case Zone_Stop:
 		{
-			if(Shavit_GetTimerStatus(other) != Timer_Stopped)
+			if(Shavit_GetTimerStatus(other) == Timer_Running)
 			{
 				Shavit_StopTimer(other);
 				Shavit_PrintToChat(other, "%T", "ZoneStopEnter", other, gS_ChatStrings.sWarning, gS_ChatStrings.sVariable2, gS_ChatStrings.sWarning);
